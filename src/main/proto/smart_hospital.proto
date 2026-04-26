@@ -1,0 +1,209 @@
+// tutaj opisujemy kontrakt
+
+
+syntax = "proto3";
+package smarthospital;
+
+option java_package = "com.smarthospital.grpc";
+option java_outer_classname = "SmartHospitalProto";
+
+// Enums
+
+enum DeviceType {
+  DEVICE_TYPE_UNKNOWN = 0;
+  PATIENT_MONITOR = 1;
+  PATIENT_BED = 2;
+  HOSPITAL_CAMERA= 3;
+
+}
+
+
+enum MonitorType {
+  MONITOR_TYPE_UNKNOWN = 0;
+  BASIC_MONITOR = 1;
+  OIT_MONITOR = 2;
+}
+
+enum BedType {
+  BED_TYPE_UNKNOWN = 0;
+  STANDARD_BED = 1;
+  OIT_BED = 2;
+}
+
+
+enum CameraType {
+  CAMERA_TYPE_UNKNOWN = 0;
+  ROOM_CAMERA = 1;
+  CORRIDOR_CAMERA= 2;
+}
+
+//messages
+// pobierz liste urzadzen
+// wybierz urządzenie
+// operacje
+
+
+message DeviceIdRequest {
+  string device_id = 1;
+}
+
+message OperationStatus {
+  bool success = 1;
+  string message = 2;
+}
+
+message DeviceInfo {
+  string device_id = 1;
+  string name = 2;
+  DeviceType type = 3;
+  string location = 4;
+}
+
+
+message DeviceList {
+  repeated DeviceInfo devices = 1;
+}
+
+message Empty {}
+
+service DeviceService {
+  rpc ListDevices(Empty) returns (DeviceList);
+}
+
+// Monitor  ---- messagess and services
+
+message BloodPressure {
+  int32 systolic = 1;
+  int32 diastolic = 2;
+}
+
+message PatientMonitorState {
+  string device_id = 1;
+  string name = 2;
+  MonitorType monitor_type = 3;
+  bool is_on = 4;
+  bool alarm_enabled = 5;
+  int32 heart_rate = 6;
+  int32 saturation = 7;
+  BloodPressure pressure = 8;
+  MonitorAlarmThresholds thresholds = 9;
+}
+
+message SetMonitorPowerRequest{
+  string device_id = 1;
+  bool is_on = 2;
+}
+
+message SetMonitorAlarmRequest{
+  string device_id = 1;
+  bool alarm_enabled = 2;
+}
+
+message MonitorAlarmThresholds{
+  int32 min_heart_rate = 1;
+  int32 max_heart_rate = 2;
+  int32 min_saturation = 3;
+}
+message SetMonitorThresholdsRequest {
+  string device_id = 1;
+  MonitorAlarmThresholds thresholds = 2;
+}
+
+
+// services for Monitor
+service PatientMonitorService{
+  rpc GetState(DeviceIdRequest) returns (PatientMonitorState);
+  rpc SetPower(SetMonitorPowerRequest) returns (OperationStatus);
+  rpc SetAlarmEnabled(SetMonitorAlarmRequest) returns (OperationStatus);
+  rpc SetThresholds(SetMonitorThresholdsRequest) returns (OperationStatus);
+}
+
+// Bed
+
+message HospitalBedState {
+  string device_id = 1;
+  string name = 2;
+  bool is_on = 3;
+  BedType bed_type = 4;
+  int32 height = 5;
+  bool wheels_locked = 6;
+  bool emergency_mode = 7;
+  bool occupied = 8;
+}
+
+message SetBedPowerRequest{
+  string device_id = 1;
+  bool is_on = 2;
+}
+
+
+message SetHeightRequest{
+  string device_id = 1;
+  int32 height = 2;
+}
+message SetWheelsLockRequest{
+  string device_id = 1;
+  bool wheels_locked = 2;
+}
+message SetOccupiedRequest {
+  string device_id = 1;
+  bool occupied = 2;
+}
+
+message SetEmergencyModeRequest {
+  string device_id = 1;
+  bool emergency_mode = 2;
+}
+
+service HospitalBedService{
+  rpc GetState(DeviceIdRequest) returns (HospitalBedState);
+  rpc SetPower(SetBedPowerRequest) returns (OperationStatus);
+  rpc SetHeight(SetHeightRequest)  returns (OperationStatus);
+  rpc SetWheelsLock(SetWheelsLockRequest) returns (OperationStatus);
+  rpc SetOccupied(SetOccupiedRequest) returns (OperationStatus);
+  rpc SetEmergencyMode(SetEmergencyModeRequest) returns (OperationStatus);
+}
+
+
+// Camera
+
+message HospitalCameraState {
+  string device_id = 1;
+  string name = 2;
+  CameraType camera_type = 3;
+  bool is_on = 4;
+  bool is_recording = 5;
+  int32 pan = 6; // obrót w poziomie
+  int32 tilt = 7; // obrót w pionie
+  int32 zoom = 8; // przybliżenie
+}
+
+
+message SetCameraPowerRequest{
+  string device_id = 1;
+  bool is_on = 2;
+}
+
+message SetRecordingRequest {
+  string device_id = 1;
+  bool is_recording = 2;
+}
+
+message MoveCameraRequest {
+  string device_id = 1;
+  int32 pan = 2;
+  int32 tilt = 3;
+  int32 zoom = 4;
+}
+
+
+//Services
+service HospitalCameraService{
+  rpc GetState(DeviceIdRequest) returns (HospitalCameraState);
+  rpc SetPower(SetCameraPowerRequest) returns (OperationStatus);
+  rpc SetRecording(SetRecordingRequest) returns (OperationStatus);
+  rpc MoveCamera(MoveCameraRequest) returns (OperationStatus);
+}
+
+
+
