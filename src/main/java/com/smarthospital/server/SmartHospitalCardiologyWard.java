@@ -75,84 +75,84 @@ public class SmartHospitalCardiologyWard {
         registry.addHospitalBedDevice(
                 new HospitalBedDevice(
                         "bedC1",
-                        "Łóżko sala 1",
+                        "Łóżko 1",
                         SmartHospitalProto.BedType.STANDARD_BED,
                         true,
                         40,
                         true,
                         false,
                         true,
-                        "Cardiology Ward"
+                        "Odział Kardiologii"
                 )
         );
 
         registry.addHospitalBedDevice(
                 new HospitalBedDevice(
                         "bedC2",
-                        "Łóżko sala 2",
+                        "Łóżko  2",
                         SmartHospitalProto.BedType.OIT_BED,
                         true,
                         55,
                         true,
                         true,
                         false,
-                        "Cardiology Ward"
+                        "Oddział Kardiologii"
                 )
         );
 
         registry.addHospitalBedDevice(
                 new HospitalBedDevice(
                         "bedC3",
-                        "Łóżko sala 3",
+                        "Łóżko  3",
                         SmartHospitalProto.BedType.STANDARD_BED,
                         false,
                         35,
                         false,
                         false,
                         true,
-                        "Cardiology Ward"
+                        "Oddział Kardiologii"
                 )
         );
 
         registry.addHospitalCameraDevice(
                 new HospitalCameraDevice(
                         "camC1",
-                        "Kamera sala 1",
+                        "Kamera  1",
                         SmartHospitalProto.CameraType.ROOM_CAMERA,
                         true,
                         true,
                         0,
                         0,
                         1,
-                        "Cardiology Ward"
+                        "Oddział Kardiologii"
                 )
         );
 
         registry.addHospitalCameraDevice(
                 new HospitalCameraDevice(
                         "camC2",
-                        "Kamera korytarz 1",
+                        "Kamera 2",
                         SmartHospitalProto.CameraType.CORRIDOR_CAMERA,
                         true,
                         false,
                         30,
                         5,
                         2,
-                        "Cardiology Ward"
+                        "Oddział Kardiologii"
                 )
         );
 
         registry.addHospitalCameraDevice(
                 new HospitalCameraDevice(
                         "camC3",
-                        "Kamera sala 2",
+                        "Kamera  3",
                         SmartHospitalProto.CameraType.ROOM_CAMERA,
                         false,
                         false,
                         -20,
                         10,
                         1,
-                        "Cardiology Ward"
+                        "Oddział Kardiologii"
                 )
         );
 
@@ -165,10 +165,10 @@ public class SmartHospitalCardiologyWard {
                 .build();
 
         server.start();
-        System.out.println("CardiologyWard started on port 50051");
+        System.out.println("Serwer odziału Kardiologii nasłuchuje na porcie 50051");
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Shutting down CardiologyWard...");
+            System.out.println("Zamykanie serwera oddziału Kardiologii...");
             server.shutdown();
         }));
 
