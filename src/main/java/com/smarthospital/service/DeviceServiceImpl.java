@@ -23,7 +23,7 @@ public class DeviceServiceImpl  extends  DeviceServiceGrpc.DeviceServiceImplBase
             Map<String, HospitalCameraDevice> hospitalCameraDevices = deviceRegistry.getHospitalCameraDevices();
             Map<String, HospitalBedDevice> hospitalBedDevices = deviceRegistry.getHospitalBedDevices();
 
-            System.out.println("Zwróc wszystkie możliwe urządzenia");
+            System.out.println("Zwróc wszystkie dostępne urządzenia na Odziale");
 
         SmartHospitalProto.DeviceList.Builder deviceListBuilder = SmartHospitalProto.DeviceList.newBuilder();
 
@@ -37,7 +37,6 @@ public class DeviceServiceImpl  extends  DeviceServiceGrpc.DeviceServiceImplBase
                             .build()
             );
         }
-
         for (HospitalBedDevice device : hospitalBedDevices.values()) {
             deviceListBuilder.addDevices(
                     SmartHospitalProto.DeviceInfo.newBuilder()
@@ -48,7 +47,6 @@ public class DeviceServiceImpl  extends  DeviceServiceGrpc.DeviceServiceImplBase
                             .build()
             );
         }
-
         for (HospitalCameraDevice  device : hospitalCameraDevices.values()) {
             deviceListBuilder.addDevices(
                     SmartHospitalProto.DeviceInfo.newBuilder()

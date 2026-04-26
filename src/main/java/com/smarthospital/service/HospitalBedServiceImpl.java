@@ -19,7 +19,6 @@ public class HospitalBedServiceImpl extends HospitalBedServiceGrpc.HospitalBedSe
     @Override
     public void getState(SmartHospitalProto.DeviceIdRequest request, StreamObserver<SmartHospitalProto.HospitalBedState> responseObserver) {
        HospitalBedDevice hospitalBedDevice = registry.getHospitalBedDevice(request.getDeviceId());
-
         if(hospitalBedDevice == null){
             responseObserver.onError(
                     Status.NOT_FOUND
@@ -112,7 +111,7 @@ public class HospitalBedServiceImpl extends HospitalBedServiceGrpc.HospitalBedSe
         SmartHospitalProto.OperationStatus response =
                 SmartHospitalProto.OperationStatus.newBuilder()
                         .setSuccess(true)
-                        .setMessage("Zmieniono status kólek")
+                        .setMessage("Zmieniono status kólek w łózku ")
                         .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();

@@ -2,7 +2,7 @@ import grpc
 import smart_hospital_pb2 as pb2
 import smart_hospital_pb2_grpc as pb2_grpc
 
-#wspólne funkcje
+# Funkcje do wypisania urządzeń :
 def list_devices(device_stub):
     devices = device_stub.ListDevices(pb2.Empty()).devices
     return len(devices), devices
@@ -10,14 +10,12 @@ def list_devices(device_stub):
 def print_devices(devices):
     i = 0
     for dev in devices:
-        print(f"{i},   {dev.device_id}, {dev.name}, {dev.type}, {dev.location} ")
+        print(f"{i}, {dev.device_id}, {dev.name}, {dev.type}, {dev.location} ")
         i += 1
 
-
-#Monitory -- funkcje
+#Monitory -- funkcje:
 
 """
-
 service PatientMonitorService{
   rpc GetState(DeviceIdRequest) returns (PatientMonitorState);
   rpc SetPower(SetMonitorPowerRequest) returns (OperationStatus);
@@ -29,7 +27,7 @@ service PatientMonitorService{
 def get_monitor_state(monitor_stub, device_id):
 
     state = monitor_stub.GetState(pb2.DeviceIdRequest(device_id=device_id))
-    print("\n=== MONITOR STATE ===")
+    print("\n=== STAN MONITORA  ===")
     print("id:", state.device_id)
     print("name:", state.name)
     print("is_on:", state.is_on)
@@ -69,6 +67,7 @@ def set_monitor_thresholds(monitor_stub, device_id, min_hr, max_hr, min_sat):
     print("message:", response.message)
 
 
+# Łóżka --  funkcje
 """
 service HospitalBedService{
   rpc GetState(DeviceIdRequest) returns (HospitalBedState);
@@ -80,8 +79,6 @@ service HospitalBedService{
 }
 
 """
-
-# Łóżka -> funkcje
 
 
 def get_bed_state(bed_stub, device_id):
@@ -163,7 +160,7 @@ def set_emergency_mode(bed_stub, device_id, emergency_mode):
     print("message:", response.message)
 
 
-
+#Kamery -- funkcje
 
 """
 service HospitalCameraService{
@@ -175,8 +172,6 @@ service HospitalCameraService{
 """
 
 
-
-#Kamery -- funkcje
 
 def get_camera_state(camera_stub, device_id):
     state = camera_stub.GetState(pb2.DeviceIdRequest(
@@ -234,7 +229,7 @@ def move_camera(camera_stub, device_id, pan, tilt, zoom):
 
 
 
-#Monitor menu
+# Menu dla monitora
 """
 Co udostępnia Menu:
 - pokaż stan monitora 
@@ -289,6 +284,7 @@ def monitor_menu(monitor_stub, device_id):
             get_monitor_state(monitor_stub, device_id)
 
 
+# Menu dla łózka
 """
 Co udostępnia Bed :
 - pokaż stan Łóżka 
@@ -364,6 +360,8 @@ def bed_menu(bed_stub, device_id):
         else:
             print("Nieprawidłowa opcja.")
 
+
+# Menu dla kamer
 """
 Co udostępnia Kamera:
 - pokaż stan monitora 
@@ -423,15 +421,12 @@ def camera_menu(camera_stub, device_id):
 
 
 
-#Wybierz oddział
-
 def choose_ward():
     print("Wybierz oddział:")
     print("1. Kardiologia")
     print("2. Chirurgia")
 
     choice = input("Twój wybór: ").strip()
-
     if choice == "1":
         return "CardiologyWard", "localhost", 50051
     elif choice == "2":
@@ -439,13 +434,13 @@ def choose_ward():
     else:
         print("Nieprawidłowy wybór.")
         return None, None, None
-#łączenie z serwerem
 
+
+#łączenie z serwerem
 
 def create_connection(host, port):
     address = f"{host}:{port}"
     channel = grpc.insecure_channel(address)
-
     device_stub = pb2_grpc.DeviceServiceStub(channel)
     monitor_stub = pb2_grpc.PatientMonitorServiceStub(channel)
     bed_stub = pb2_grpc.HospitalBedServiceStub(channel)
@@ -454,7 +449,7 @@ def create_connection(host, port):
     return channel, device_stub, monitor_stub, bed_stub, camera_stub
 
 
-def main_menu(): #wypisanie i wybieranie urządzenia
+def main_menu():
     print("Witam w panelu medycznym")
 
     ward, host, port = choose_ward()
@@ -495,12 +490,6 @@ def main_menu(): #wypisanie i wybieranie urządzenia
         print("details:", e.details())
     finally:
         channel.close()
-
-
-
-
-
-
 
 
 

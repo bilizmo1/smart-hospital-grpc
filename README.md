@@ -32,7 +32,7 @@ Każdy oddział udostępnia zestaw urządzeń:
 - pobranie stanu
 - włączenie/wyłączenie
 - włączenie/wyłączenie alarmu
-- ustawienie progów alarmowych(tętno, ciśnienie)
+- ustawienie progów alarmowych(HR, saturacja)
 
 
 ### 2. Łóżko

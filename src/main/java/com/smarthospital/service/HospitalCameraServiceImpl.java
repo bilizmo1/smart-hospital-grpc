@@ -86,7 +86,7 @@ public class HospitalCameraServiceImpl extends HospitalCameraServiceGrpc.Hospita
         SmartHospitalProto.OperationStatus response =
                 SmartHospitalProto.OperationStatus.newBuilder()
                         .setSuccess(true)
-                        .setMessage("Nagrywanie ")
+                        .setMessage("Ustawiono nagrywanie ")
                         .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();

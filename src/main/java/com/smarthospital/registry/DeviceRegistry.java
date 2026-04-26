@@ -12,7 +12,7 @@ public class DeviceRegistry {
     private final Map<String, HospitalBedDevice> hospitalBedDevices = new HashMap<>();
     private final Map<String, HospitalCameraDevice> hospitalCameraDevices = new HashMap<>();
 
-    //dodajemy do struktur
+    //dodajemy urządzenia do struktur
     public void addPatientMonitorDevice(PatientMonitorDevice patientMonitorDevice) {
         patientMonitorDevices.put(patientMonitorDevice.getDeviceId(), patientMonitorDevice);
     }
@@ -34,7 +34,7 @@ public class DeviceRegistry {
         return hospitalCameraDevices.get(deviceId);
     }
 
-    // zwracamy wszystkie urządzenie
+    // zwracamy wszystkie urządzenie danego typu
 
     public Map<String, PatientMonitorDevice> getPatientMonitorDevices() {
         return patientMonitorDevices;

@@ -129,7 +129,7 @@ public class PatientMonitorServiceImpl extends PatientMonitorServiceGrpc.Patient
         SmartHospitalProto.OperationStatus response =
                 SmartHospitalProto.OperationStatus.newBuilder()
                         .setSuccess(true)
-                        .setMessage("Ustawiono  Progi alarmowe")
+                        .setMessage("Ustawiono Progi alarmowe monitora ")
                         .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();

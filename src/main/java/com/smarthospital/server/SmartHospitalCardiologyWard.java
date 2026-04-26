@@ -167,10 +167,7 @@ public class SmartHospitalCardiologyWard {
         server.start();
         System.out.println("Serwer odziału Kardiologii nasłuchuje na porcie 50051");
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Zamykanie serwera oddziału Kardiologii...");
-            server.shutdown();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
 
         server.awaitTermination();
     }
